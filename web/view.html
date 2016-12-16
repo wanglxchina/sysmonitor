@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <!--添加响应式视图标签-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>H5 Test</title>
+    <!--chart.js for draw line.-->
+    <script src="https://cdn.bootcss.com/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" crossorigin="anonymous">
+    <!--get data from server by ajax-->
+    <script>
+        function getAppInfo(myChart, dotCount) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var appData = eval("(" + xhr.responseText + ")");
+                    myChart.data.labels[dotCount] = appData.time
+                    myChart.data.datasets[0].data[dotCount] = appData.mem;
+                    myChart.data.datasets[1].data[dotCount] = appData.vmem;
+                    myChart.update();
+                    document.getElementById("myTest").innerHTML = dotCount;
+                    return xhr.responseText;
+                }
+            }
+            xhr.open("GET", "http://localhost:38889/sysmonitor/app/SMF", true);
+            xhr.send();
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="myChart" width="900" height="450"></canvas>
+    <div id="myTest"></div>
+    <script>
+        var dotCount = 0;
+        var ctx = document.getElementById("myChart");
+        var myData = {
+            labels: [],
+            datasets: [{
+                label: "物理内存",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderWidth: 2,
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [],
+                spanGaps: false,
+            }, {
+                label: "虚拟内存",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(255,99,71,0.4)",
+                borderColor: "rgba(255,99,71,1)",
+                borderWidth: 2,
+                pointBorderColor: "rgba(255,99,71,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverBackgroundColor: "rgba(255,99,71,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [],
+                spanGaps: false,
+            }],
+        };
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: myData,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: '物理内存/虚拟内存'
+                },
+                responsive: false
+            }
+        });
+        setInterval(function() {
+            getAppInfo(myChart, dotCount);
+            dotCount = dotCount + 1;
+        }, 1000);
+    </script>
+
+    <!-- jQuery first, then Tether（for tips）, then Bootstrap JS. -->
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/tether/1.3.7/js/tether.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

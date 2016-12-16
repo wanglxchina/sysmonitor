@@ -1,0 +1,16 @@
+packages/*
+*.db
+*.obj
+*.pdb
+*.ilk
+ipch/*
+*.pch
+*.ipch
+*.idb
+*.tlog
+log_*
+*.opendb
+*.xml
+*.exe
+*.bak
+*.log
