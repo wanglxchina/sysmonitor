@@ -14,3 +14,4 @@ log_*
 *.bak
 *.log
 server/.vs/
+!**/server/**/*.pdb
