@@ -84,7 +84,4 @@
       <Filter>util\pugixml</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
 </Project>
