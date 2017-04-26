@@ -28,7 +28,7 @@ int main()
 
 	//3.开启rest接口，允许外部控制
 	int serverPort = CConfiguration::GetInstance().GetServerPort();
-	utility::string_t addr(U("http://localhost:"));
+	utility::string_t addr(U("http://*:"));
 	addr = addr + WConvertToString(serverPort);
 	on_init_rest(addr);
 

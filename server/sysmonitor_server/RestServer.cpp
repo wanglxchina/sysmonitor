@@ -116,16 +116,15 @@ void RestServer::handle_post(http_request message)
 	try
 	{
 		utility::string_t appName = app.at(APP_NAME).as_string();
-		utility::string_t storage = app.at(APP_STOREAGE).as_string();
-		if (appName.empty() || storage.empty())
+		bool storage = app.at(APP_STOREAGE).as_bool();
+		if (appName.empty())
 		{
 			message.reply(status_codes::BadRequest);
 			return;
 		}
 		USES_CONVERSION;
-		bool storageFlag = storage == U("false") ? false : true;
-		CProcessInfo::GetInstance().AddMonitorProcess(W2A(appName.c_str()),storageFlag );
-		CConfiguration::GetInstance().AddDefaultProcess(W2A(appName.c_str()), storageFlag);
+		CProcessInfo::GetInstance().AddMonitorProcess(W2A(appName.c_str()), storage);
+		CConfiguration::GetInstance().AddDefaultProcess(W2A(appName.c_str()), storage);
 		message.reply(status_codes::Accepted);
 	}
 	catch (web::json::json_exception e)

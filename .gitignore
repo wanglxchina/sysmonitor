@@ -14,4 +14,6 @@ log_*
 *.bak
 *.log
 server/.vs/
-!**/server/**/*.pdb
+server/Debug/sysmonitor_server.pdb
+server/sysmonitor_server/Debug/vc140.pdb
+!**/server/packages/**/*.pdb

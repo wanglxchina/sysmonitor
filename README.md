@@ -26,3 +26,22 @@
 
 1.ajax调用rest接口同源和跨源问题  
 2.rest接口appkey和OAuth的使用
+
+
+
+REST示例：
+
+获取： `GET http://localhost:38889/sysmonitor/app`
+
+添加:
+
+```
+POST http://localhost:38889/sysmonitor/app HTTP/1.1
+User-Agent: Fiddler
+Host: localhost:38889
+Content-Type: application/json
+Content-Length: 37
+
+{"appName":"SMF.exe","storage":false}
+```
+
