@@ -131,7 +131,7 @@ void CConfiguration::SyncDataToFile()
 		}
 		remove(m_path.c_str());
 		doc.save_file(m_path.c_str());
-		Sleep(10);
+		Sleep(100);
 	}
 	m_threadWork = false;
 }
@@ -153,7 +153,7 @@ bool CConfiguration::read_config()
 		return false;
 	}
 	m_serverPort = doc.child("server_port").text().as_int();
-	m_path = doc.child("path").text().as_string();
+	m_storagePath = doc.child("path").text().as_string();
 	pugi::xml_object_range<pugi::xml_named_node_iterator> app_range = doc.child("applist").children("app");
 	for (auto iter = app_range.begin();iter != app_range.end();++iter)
 	{
